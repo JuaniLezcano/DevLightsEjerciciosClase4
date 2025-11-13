@@ -59,10 +59,10 @@ namespace EjerciciosClase4
                             Ejercicio4();
                             break;
                         case 5:
-                            //Ejercicio5();
+                            Ejercicio5();
                             break;
                         case 6:
-                            //Ejercicio6();
+                            Ejercicio6();
                             break;
                         case 7:
                             ///Ejercicio7();
@@ -273,6 +273,41 @@ namespace EjerciciosClase4
                 Console.WriteLine($"Los productos comprados que no estaban en la lista del super fueron: {string.Join(", ", listaCompraInesperada)}");
                 Console.WriteLine($"Los productos comprados fueron: {string.Join(", ", listaCompra)}");
             }
+        }
+
+        static void Ejercicio5()
+        {
+            Section("Ejercicio 5");
+            char[,] matriz = new char[5, 5];
+
+            for (int i = 0; i < matriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < matriz.GetLength(1); j++)
+                {
+                    if ((i + j + 1) % 2 == 0)
+                    {
+                        matriz[i, j] = 'P';
+                    } else
+                    {
+                        matriz[i, j] = 'I';
+                    }
+                }
+            }
+
+            for (int i = 0; i < matriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < matriz.GetLength(1); j++)
+                {
+                    Console.Write(matriz[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+        }
+
+        static void Ejercicio6()
+        {
+            Section("Ejercicio 6");
+
         }
     }
 }
