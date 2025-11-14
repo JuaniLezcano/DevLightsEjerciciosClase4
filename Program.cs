@@ -112,7 +112,7 @@ namespace EjerciciosClase4
         static void Ejercicio1()
         {
             Section("Ejercicio 1");
-            List<int> resultadosAlumno = new List<int>{ 8, 2, 5, 7, 10, 4, 7, 9, 6, 8};
+            List<int> resultadosAlumno = new List<int> { 8, 2, 5, 7, 10, 4, 7, 9, 6, 8 };
             double promedio = resultadosAlumno.Sum() / resultadosAlumno.Count();
             Console.WriteLine($"Las notas de los ultimos 10 examenes del alumno son: {string.Join(", ", resultadosAlumno)}");
             Console.WriteLine($"El promedio de las notas es: {promedio}");
@@ -128,7 +128,8 @@ namespace EjerciciosClase4
                 if (i < 18)
                 {
                     countMenor++;
-                } else
+                }
+                else
                 {
                     countMayor++;
                 }
@@ -242,10 +243,10 @@ namespace EjerciciosClase4
                     continue;
                 }
             }
-            
+
             void nombreProducto()
             {
-                
+
                 Console.WriteLine("Ingresa el nombre del producto que vas a comprar");
                 string? producto = Console.ReadLine();
                 string? productoEnLista = listaSuper.Find(x => x == producto);
@@ -287,7 +288,8 @@ namespace EjerciciosClase4
                     if ((i + j + 1) % 2 == 0)
                     {
                         matriz[i, j] = 'P';
-                    } else
+                    }
+                    else
                     {
                         matriz[i, j] = 'I';
                     }
@@ -307,7 +309,84 @@ namespace EjerciciosClase4
         static void Ejercicio6()
         {
             Section("Ejercicio 6");
+            int[,] matriz = new int[5, 7];
+            Random generadorRandom = new Random();
+            string[] diasSemana = { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo" };
+            int contadorDias = 1;
 
+            for (int i = 0; i < matriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < matriz.GetLength(1); j++)
+                {
+                    if(contadorDias > 31)
+                    {
+                        break;
+                    }
+                    int numeroRandom = generadorRandom.Next(7, 39);
+                    matriz[i, j] = numeroRandom;
+                    contadorDias++;
+                }
+            }
+
+            for (int i = 0; i < matriz.GetLength(0); i++)
+            {
+                RecorrerSemana(i);
+            }
+            temperaturaMasAlta();
+
+
+            void RecorrerSemana(int semana)
+            {
+                int diaMayor = 0, diaMenor = 0;
+                int menorTemperatura = 39;
+                int mayorTemperatura = 0;
+                int acumuladorTemperaturaSemana = 0;
+                int contadorDiasSemana = 0;
+                Console.WriteLine($"\nSemana {semana + 1}:");
+                contadorDiasSemana = 0;
+
+                for (int j = 0; j < matriz.GetLength(1); j++)
+                {
+                    if (matriz[semana, j] != 0)
+                    {
+                        if (matriz[semana, j] > mayorTemperatura)
+                        {
+                            mayorTemperatura = matriz[semana, j];
+                            diaMayor = j;
+                        }
+                        if (matriz[semana, j] < menorTemperatura)
+                        {
+                            menorTemperatura = matriz[semana, j];
+                            diaMenor = j;
+                        }
+                        contadorDiasSemana++;
+                        acumuladorTemperaturaSemana += matriz[semana, j];
+                    }
+                }
+                int promedio = (contadorDiasSemana > 0) ? acumuladorTemperaturaSemana / contadorDiasSemana : 0;
+
+                Console.WriteLine($"El promedio de temperatura de la semana {semana + 1} es: {promedio} ");
+                Console.WriteLine($"La mayor temperatura de la semana {semana + 1} es: {mayorTemperatura}°C y fue el dia {diasSemana[diaMayor]}");
+                Console.WriteLine($"La menor temperatura de la semana {semana + 1} es: {menorTemperatura}°C y fue el dia {diasSemana[diaMenor]}");
+            }
+
+            void temperaturaMasAlta()
+            {
+                int mayorTemperaturaMensual = 0;
+                int diaMayorMensual = 0;
+                for (int i = 0; i < matriz.GetLength(0); i++)
+                {
+                    for (int j = 0; j < matriz.GetLength(1); j++)
+                    {
+                        if(matriz[i, j] > mayorTemperaturaMensual)
+                        {
+                            mayorTemperaturaMensual = matriz[i, j];
+                            diaMayorMensual = j;
+                        }
+                    }
+                }
+                Console.WriteLine($"\nLa temperatura más alta del mes fue de {mayorTemperaturaMensual}°C y fue el dia {diasSemana[diaMayorMensual]}");
+            }
         }
     }
 }
