@@ -23,7 +23,6 @@ namespace EjerciciosClase4
                 "8",
                 "9",
                 "10",
-                "11 (extra)",
                 "Finalizar Proceso"
             };
 
@@ -38,7 +37,7 @@ namespace EjerciciosClase4
                     Console.WriteLine($"{index} - {e}");
                     index++;
                 }
-                Console.Write("Ingresá un número (1-12): ");
+                Console.Write("Ingresá un número (1-11): ");
                 input = Console.ReadLine();
                 index = 1;
 
@@ -65,21 +64,18 @@ namespace EjerciciosClase4
                             Ejercicio6();
                             break;
                         case 7:
-                            ///Ejercicio7();
+                            Ejercicio7();
                             break;
                         case 8:
-                            //Ejercicio8();
+                            Ejercicio8();
                             break;
                         case 9:
-                            //Ejercicio9();
+                            Ejercicio9();
                             break;
                         case 10:
-                            //Ejercicio10();
+                            Ejercicio10();
                             break;
                         case 11:
-                            //Ejercicio11();
-                            break;
-                        case 12:
                             finishProcess = true;
                             break;
                         default:
@@ -318,7 +314,7 @@ namespace EjerciciosClase4
             {
                 for (int j = 0; j < matriz.GetLength(1); j++)
                 {
-                    if(contadorDias > 31)
+                    if (contadorDias > 31)
                     {
                         break;
                     }
@@ -347,8 +343,8 @@ namespace EjerciciosClase4
 
                 for (int j = 0; j < matriz.GetLength(1); j++)
                 {
-                    if (matriz[semana, j] != 0)
-                    {
+                    if (matriz[semana, j] != 0)
+                    {
                         if (matriz[semana, j] > mayorTemperatura)
                         {
                             mayorTemperatura = matriz[semana, j];
@@ -359,7 +355,7 @@ namespace EjerciciosClase4
                             menorTemperatura = matriz[semana, j];
                             diaMenor = j;
                         }
-                        contadorDiasSemana++;
+                        contadorDiasSemana++;
                         acumuladorTemperaturaSemana += matriz[semana, j];
                     }
                 }
@@ -378,7 +374,7 @@ namespace EjerciciosClase4
                 {
                     for (int j = 0; j < matriz.GetLength(1); j++)
                     {
-                        if(matriz[i, j] > mayorTemperaturaMensual)
+                        if (matriz[i, j] > mayorTemperaturaMensual)
                         {
                             mayorTemperaturaMensual = matriz[i, j];
                             diaMayorMensual = j;
@@ -387,6 +383,225 @@ namespace EjerciciosClase4
                 }
                 Console.WriteLine($"\nLa temperatura más alta del mes fue de {mayorTemperaturaMensual}°C y fue el dia {diasSemana[diaMayorMensual]}");
             }
+        }
+
+        static void Ejercicio7()
+        {
+            Section("Ejercicio 7");
+            int[,] tabla = new int[10, 10];
+            for (int i = 0; i < tabla.GetLength(0); i++)
+            {
+                for (int j = 0; j < tabla.GetLength(1); j++)
+                {
+                    tabla[i, j] = (i + 1) * (j);
+                }
+            }
+
+            for (int i = 0; i < tabla.GetLength(0); i++)
+            {
+                for (int j = 0; j < tabla.GetLength(1); j++)
+                {
+                    Console.Write($"{tabla[i, j], 3}");
+                }
+                Console.WriteLine();
+            }
+        }
+
+        static void Ejercicio8()
+        {
+            Section("Ejercicio 8");
+            char[,] matriz = new char[10, 10];
+            int cantidadX = 0;
+            Random generadorRandom = new Random();
+            int contadorIntentos = 0, contadorFalla = 0;
+
+            while (cantidadX < 35)
+            {
+                int fila = generadorRandom.Next(0, 10);
+                int columna = generadorRandom.Next(0, 10);
+
+                if (matriz[fila, columna] != 'X')
+                {
+                    matriz[fila, columna] = 'X';
+                    cantidadX++;
+                }
+            }
+
+            do
+            {
+                if ( contadorIntentos <= 35) {
+                    contadorIntentos++;
+                    Console.WriteLine("Encontra las 'X' escondidas.");
+                    Console.WriteLine("Ingrese el numero de la fila (1-10)");
+                    bool isValidFila = int.TryParse(Console.ReadLine(), out int colFila);
+                    Console.WriteLine("Ingrese el numero de la columna (1-10)");
+                    bool isValidCol = int.TryParse(Console.ReadLine(), out int colNum);
+
+                    if (matriz[colFila-1, colNum-1] == 'X')
+                    {
+                        Console.WriteLine("X acertada exitosamente!");
+                    }
+                    else
+                    {
+                        contadorFalla++;
+                        Console.WriteLine($"No acertaste a ninguna X, te quedan {4 - contadorFalla} intentos");
+                    }
+                }
+            } while (contadorFalla <= 3);
+
+
+            for (int i = 0; i < matriz.GetLength(0); i++)
+            {
+                for (int j = 0; j < matriz.GetLength(1); j++)
+                {
+                    if (matriz[i, j] == 'X') { 
+                        Console.Write(matriz[i, j] + "  ");
+                    } else
+                    {
+                        Console.Write('*' + "  ");
+                    }
+                }
+                Console.WriteLine();
+            }
+        }
+        static void Ejercicio9()
+        {
+            Section("Ejercicio 9");
+            Dictionary<string, double> calificaciones = new Dictionary<string, double>();
+            bool finishMenu = false;
+            do
+            {
+                Console.WriteLine("Seleccione una opción:");
+                Console.WriteLine("1 - Agregar calificación");
+                Console.WriteLine("2 - Ver promedio del curso");
+                Console.WriteLine("3 - Ver alumno con mejor y peor nota");
+                Console.WriteLine("4 - Finalizar");
+                bool isValidOpt = int.TryParse(Console.ReadLine(), out int opt);
+
+                switch (opt)
+                {
+                    case 1:
+                        Console.WriteLine("Ingrese el nombre del alumno:");
+                        string? nombre = Console.ReadLine();
+                        Console.WriteLine("Ingrese la calificación del alumno:");
+                        bool isValidCal = double.TryParse(Console.ReadLine(), out double calificacion);
+                        if (nombre != null && isValidCal)
+                        {
+                            calificaciones[nombre] = calificacion;
+                            Console.WriteLine("Calificación agregada exitosamente.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Entrada inválida.");
+                        }
+                        break;
+                    case 2:
+                        if (calificaciones.Count > 0)
+                        {
+                            double suma = 0;
+                            foreach (var c in calificaciones)
+                            {
+                                suma += c.Value;
+                            }
+
+                            double promedio = suma / calificaciones.Count;
+                            Console.WriteLine($"El promedio del curso es: {promedio}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("No hay calificaciones registradas.");
+                        }
+                        break;
+                    case 3:
+                        if (calificaciones.Count > 0)
+                        {
+                            string alumnoMejor = "";
+                            string alumnoPeor = "";
+                            double mejorNota = double.MinValue;
+                            double peorNota = double.MaxValue;
+
+                            foreach (var c in calificaciones)
+                            {
+                                if (c.Value > mejorNota)
+                                {
+                                    mejorNota = c.Value;
+                                    alumnoMejor = c.Key;
+                                }
+
+                                if (c.Value < peorNota)
+                                {
+                                    peorNota = c.Value;
+                                    alumnoPeor = c.Key;
+                                }
+                            }
+
+                            Console.WriteLine($"Mejor alumno: {alumnoMejor} con {mejorNota}");
+                            Console.WriteLine($"Peor alumno: {alumnoPeor} con {peorNota}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("No hay calificaciones registradas.");
+                        }
+                        break;
+                    case 4:
+                        finishMenu = true;
+                        break;
+                    default:
+                        Console.WriteLine("Opción inválida.");
+                        break;
+                }
+            }
+            while (finishMenu == false);
+        }
+        static void Ejercicio10() 
+        {
+            Section("Ejercicio 10");
+            Queue<string> cola = new Queue<string>();
+            bool finishMenu = false;
+            do
+            {
+                Console.WriteLine("Seleccione una opción:");
+                Console.WriteLine("1 - Encolar nombres de clientes");
+                Console.WriteLine("2 - Atender (desencolar) uno por uno hasta que no queden");
+                Console.WriteLine("3 - Mostrar en pantalla quien esta siendo atendido y cuantos quedan en la fila");
+                Console.WriteLine("4 - Finalizar");
+                bool isValidOpt = int.TryParse(Console.ReadLine(), out int opt);
+                string nombreAtendiendo;
+                switch (opt)
+                {
+                    case 1:
+                        Console.WriteLine("Ingrese el nombre de un cliente");
+                        string? nombre = Console.ReadLine();
+                        cola.Enqueue(nombre);
+                        break;
+                    case 2:
+                        if (cola.Count > 0)
+                        {
+                            nombreAtendiendo = cola.Dequeue();
+                            Console.WriteLine($"Atendiendo a: {nombreAtendiendo}");
+                        }
+                        else
+                        {
+                            nombreAtendiendo = null;
+                            Console.WriteLine("No hay clientes en la fila.");
+                        }
+                        break;
+                    case 3:
+                        if (cola.Count > 0)
+                        {
+                            Console.WriteLine($"Siguiente cliente: {cola.Peek()}");
+                            Console.WriteLine($"Quedan {cola.Count} en la fila.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("No hay nadie esperando.");
+                        }
+                        break;
+                    case 4:
+                        finishMenu = true;
+                        break;
+                }
+            } while (finishMenu == false);
         }
     }
 }
